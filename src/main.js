@@ -22,6 +22,7 @@ let config = {
 }
 
 let game = new Phaser.Game(config);
+
 console.log("Printing canvas from main.js");
 
 //globals
