@@ -3,6 +3,4 @@ class Starter extends Phaser.Scene {
         super()
     }
 
-
-    
 }

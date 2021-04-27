@@ -1,5 +1,5 @@
 
-
+console.log("Printing canvas from main.js 1");
 // define and configure main Phaser game object
 let config = {
     type: Phaser.CANVAS,
@@ -22,5 +22,6 @@ let config = {
 }
 
 let game = new Phaser.Game(config);
+console.log("Printing canvas from main.js");
 
 //globals
