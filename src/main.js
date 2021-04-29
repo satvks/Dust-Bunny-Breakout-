@@ -11,7 +11,7 @@ let config = {
     physics: {
         default: 'arcade',
         arcade: {
-            //debug: true,
+            debug: true,
             gravity: {
                 x: 0,
                 y: 0
@@ -23,6 +23,6 @@ let config = {
 
 let game = new Phaser.Game(config);
 
-console.log("Printing canvas from main.js");
-
 //globals
+const SCALE = 0.5;
+const tileSize = 26;
