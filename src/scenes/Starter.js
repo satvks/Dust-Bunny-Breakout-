@@ -14,6 +14,10 @@ class Starter extends Phaser.Scene {
 
     create() {
 
+        this.background = this.add.tileSprite(
+            0, 0, 960, 640, 'room'
+            ).setOrigin(0,0);
+
         // make ground tiles group
         this.ground = this.add.group();
         for(let i = 0; i < game.config.width; i += tileSize) {
@@ -23,13 +27,15 @@ class Starter extends Phaser.Scene {
             this.ground.add(groundTile);
         }
 
-        
-
         // put another tile sprite above the ground tiles
         this.groundScroll = this.add.tileSprite(0, game.config.height/1.5-tileSize, game.config.width, 100, 'groundScroll').setOrigin(0);
 
         this.bunny = this.physics.add.sprite(20, game.config.height/1.5-tileSize, 'bunny').setScale(SCALE+.1);
 
+    }
+
+    update() {
+        this.background.tilePositionX += 2;
     }
 
 }
