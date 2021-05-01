@@ -38,6 +38,8 @@ class Starter extends Phaser.Scene {
             runChildUpdate: true    // make sure update runs on group children
         });
 
+        this.addBarrier();
+
     }
 
     addBarrier() {
