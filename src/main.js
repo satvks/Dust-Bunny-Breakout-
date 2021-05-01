@@ -1,5 +1,3 @@
-
-console.log("Printing canvas from main.js 1");
 // define and configure main Phaser game object
 let config = {
     type: Phaser.CANVAS,
