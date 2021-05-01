@@ -10,6 +10,8 @@ class Starter extends Phaser.Scene {
         this.load.image('floors', 'block.png');
         this.load.image('room', 'bunnybg.png');
         this.load.image('groundScroll', 'floor.png');
+        this.load.image('blockB', 'BoxB.png');
+        this.load.image('blockA', 'BoxA.png');
     }
 
     create() {
@@ -32,6 +34,15 @@ class Starter extends Phaser.Scene {
 
         this.bunny = this.physics.add.sprite(20, game.config.height/1.5-tileSize, 'bunny').setScale(SCALE+.1);
 
+        this.barrierGroup = this.add.group({
+            runChildUpdate: true    // make sure update runs on group children
+        });
+
+    }
+
+    addBarrier() {
+        let barrier = new Obstacle(this);
+        this.barrierGroup.add(barrier);
     }
 
     update() {
