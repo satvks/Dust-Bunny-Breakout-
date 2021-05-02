@@ -15,8 +15,6 @@ class Starter extends Phaser.Scene {
     }
 
     create() {
-        cursors = this.input.keyboard.createCursorKeys();
-        
         // variables and settings
         this.ACCELERATION = 500;
         this.MAX_X_VEL = 500;   // pixels/second
@@ -24,6 +22,7 @@ class Starter extends Phaser.Scene {
         this.DRAG = 700;    // DRAG < ACCELERATION = icy slide
         this.JUMP_VELOCITY = -500;
         this.physics.world.gravity.y = 500;
+
         this.background = this.add.tileSprite(
             0, 0, 960, 640, 'room'
             ).setOrigin(0,0);
@@ -44,34 +43,20 @@ class Starter extends Phaser.Scene {
             runChildUpdate: true    // make sure update runs on group children
         });
 
-        this.bunny = this.physics.add.sprite(20, game.config.height/1.5-tileSize -10, 'bunny').setScale(SCALE+.1);
+        this.bunny = new Bunny(this);
         this.physics.add.collider(this.bunny, this.ground);
 
         this.addBarrier();
+        // this.physics.add.collider(this.obstacleGroup, this.ground); //problems whateverr
 
     }
 
     addBarrier() {
         let obstacle = new Obstacle(this);
         this.obstacleGroup.add(obstacle);
-        this.physics.add.collider(obstacle, this.ground);
     }
 
     update() {
         this.background.tilePositionX += 2;
-
-        if(this.bunny.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
-            this.bunny.body.setVelocityY(this.JUMP_VELOCITY);
-        } else if((cursors.right.isDown)) {
-            this.bunny.body.setAccelerationX(this.ACCELERATION);
-        } else if (cursors.left.isDown) {
-            this.bunny.body.setAccelerationX(-this.ACCELERATION);
-        } else {
-            // set acceleration to 0 so DRAG will take over
-            this.bunny.body.setAccelerationX(0);
-            this.bunny.body.setDragX(this.DRAG);
-        }
-        this.bunny.x = Phaser.Math.Clamp(this.bunny.x, 10, game.config.width);
     }
-
 }
