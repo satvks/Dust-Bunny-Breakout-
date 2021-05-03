@@ -1,14 +1,10 @@
 class Bunny extends Phaser.Physics.Arcade.Sprite {
     constructor(scene) {
-        super(scene, 20, game.config.height/1.5-tileSize -10, 'bunny').setScale(SCALE+.1);
+        super(scene, 20, game.config.height/1.5-tileSize -40, 'bunny').setScale(SCALE+.1);
         scene.add.existing(this);               // add to existing scene, displayList, updateList
         scene.physics.add.existing(this);       // add to physics system
         console.log("bunny constructor called");
-    }
-
-    create() {
-        console.log("cursor keys made");  // not being called right now
-        cursors = this.input.keyboard.createCursorKeys();
+        
         // // variables and settings
         // this.ACCELERATION = 500;
         // this.MAX_X_VEL = 500;   // pixels/second
@@ -18,20 +14,22 @@ class Bunny extends Phaser.Physics.Arcade.Sprite {
         // this.physics.world.gravity.y = 500;
     }
 
+    create() {}
+
     update() {
-        console.log("update called");
+        //console.log("update called");
         // bunny controls
-        if(this.bunny.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
-            this.bunny.body.setVelocityY(this.JUMP_VELOCITY);
-        } else if((cursors.right.isDown)) {
-            this.bunny.body.setAccelerationX(this.ACCELERATION);
+        if(this.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
+            this.body.setVelocityY(this.JUMP_VELOCITY);
+        } else if(cursors.right.isDown) {
+            this.body.setAccelerationX(this.ACCELERATION);
         } else if (cursors.left.isDown) {
-            this.bunny.body.setAccelerationX(-this.ACCELERATION);
+            this.body.setAccelerationX(-this.ACCELERATION);
         } else {
             // set acceleration to 0 so DRAG will take over
-            this.bunny.body.setAccelerationX(0);
-            this.bunny.body.setDragX(this.DRAG);
+            this.body.setAccelerationX(0);
+            this.body.setDragX(this.DRAG);
         }
-        this.bunny.x = Phaser.Math.Clamp(this.bunny.x, 10, game.config.width); // needs to stop acceleration.
+        this.x = Phaser.Math.Clamp(this.x, 10, game.config.width); // needs to stop acceleration.
     }
 }
