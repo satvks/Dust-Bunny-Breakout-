@@ -18,10 +18,10 @@ class Starter extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
 
         // variables and settings
-        this.ACCELERATION = 500;
-        this.MAX_X_VEL = 100;   // pixels/second
-        this.MAX_Y_VEL = 200;
-        this.DRAG = 300;    // DRAG < ACCELERATION = icy slide
+        this.ACCELERATION = 250;
+        this.MAX_X_VEL = 10;   // pixels/second
+        this.MAX_Y_VEL = 10;
+        this.DRAG = 2500;    // DRAG < ACCELERATION = icy slide
         this.JUMP_VELOCITY = -300;
         this.physics.world.gravity.y = 400;
 
@@ -31,7 +31,7 @@ class Starter extends Phaser.Scene {
 
         // make ground tiles group
         this.ground = this.add.group();
-        for(let i = 0; i < game.config.width; i += tileSize) {
+        for(let i = -10; i < game.config.width; i += tileSize) {
             let groundTile = this.physics.add.sprite(i, game.config.height / 1.5 - tileSize, 'floors').setScale(SCALE).setOrigin(0);
             groundTile.body.immovable = true;
             groundTile.body.allowGravity = false;
@@ -47,6 +47,8 @@ class Starter extends Phaser.Scene {
 
         this.bunny = this.physics.add.sprite(20, game.config.height/1.5-tileSize -40, 'bunny').setScale(SCALE+.1);
         this.bunny.body.setBounce(0.1);
+        this.bunny.bumped = false;      // if bunny has hit obstacle, slow down
+        this.bunny.destroyed = false;   // if vacuum caught up
         this.physics.add.collider(this.bunny, this.ground);
 
         this.addBarrier();
@@ -60,24 +62,26 @@ class Starter extends Phaser.Scene {
     }
 
     update() {
-        this.background.tilePositionX += 2;
-
-         // bunny controls
-         if(this.bunny.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
-            this.bunny.body.setVelocityY(this.JUMP_VELOCITY);
-        } else if(cursors.right.isDown) {
-            this.bunny.body.setAccelerationX(this.ACCELERATION);
-        } else if (cursors.left.isDown) {
-            this.bunny.body.setAccelerationX(-this.ACCELERATION);
-        } else {
-            // set acceleration to 0 so DRAG will take over
-            this.bunny.body.setAccelerationX(0);
-            this.bunny.body.setDragX(this.DRAG);
-        }
-        if (this.bunny.x < 10 || this.bunny.x >= game.config.width-5) {
+        this.background.tilePositionX += 5;
+        if(!this.bunny.destroyed) {
+            // bunny controls
+            if(this.bunny.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
+                this.bunny.body.setVelocityY(this.JUMP_VELOCITY);
+            } else if(cursors.right.isDown && this.bunny.x < game.config.width-5) {
+                this.bunny.body.setAccelerationX(this.ACCELERATION);
+            } else if (cursors.left.isDown && this.bunny.x > 5) {
+                this.bunny.body.setAccelerationX(-this.ACCELERATION);
+            } else {
+                // set acceleration to 0 so DRAG will take over
+                this.bunny.body.setAccelerationX(0);
+                this.bunny.body.setDragX(this.DRAG);
+            }
             
-            //this.bunny.body.setVelocityX(0);
+            this.physics.world.collide(this.bunny, this.obstacleGroup, this.Collision, null, this);
+            this.bunny.x = Phaser.Math.Clamp(this.bunny.x, 10, game.config.width); // needs to stop acceleration.
+
         }
-        this.bunny.x = Phaser.Math.Clamp(this.bunny.x, 10, game.config.width); // needs to stop acceleration.
     }
+
+
 }
