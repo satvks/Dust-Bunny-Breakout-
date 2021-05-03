@@ -41,11 +41,12 @@ class Starter extends Phaser.Scene {
         // put another tile sprite above the ground tiles
         this.groundScroll = this.add.tileSprite(0, game.config.height/1.5-tileSize, game.config.width, 100, 'groundScroll').setOrigin(0);
 
+        //OBSTACLE GROUP
         this.obstacleGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
 
-        this.bunny = this.physics.add.sprite(20, game.config.height/1.5-tileSize -40, 'bunny').setScale(SCALE+.1);
+        this.bunny = this.physics.add.sprite(game.config.width/2, game.config.height/1.5-tileSize -40, 'bunny').setScale(SCALE+.1);
         this.bunny.body.setBounce(0.1);
         this.bunny.bumped = false;      // if bunny has hit obstacle, slow down
         this.bunny.destroyed = false;   // if vacuum caught up
@@ -57,12 +58,19 @@ class Starter extends Phaser.Scene {
     }
 
     addBarrier() {
-        let obstacle = new Obstacle(this);
+        // CREATION OF OBSTACLE INSTANCE!!
+        let obsSprite = (Math.random() > 0.5) ? 'blockA': 'blockB';
+        let speedVariance  = -200 - speedInc;
+        let obstacle = new Obstacle(this, Phaser.Math.Between(-200, speedVariance), obsSprite);
         this.obstacleGroup.add(obstacle);
     }
 
     update() {
         this.background.tilePositionX += 5;
+        if(this.bunny.destroyed == false & (this.bunny.x < 120 && this.bunny.y < game.config.height + 30)) {
+            this.bunny.destroyed = true;
+            this.bunny.destroy();   // game over
+        }
         if(!this.bunny.destroyed) {
             // bunny controls
             if(this.bunny.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
@@ -76,16 +84,17 @@ class Starter extends Phaser.Scene {
                 this.bunny.body.setAccelerationX(0);
                 this.bunny.body.setDragX(this.DRAG);
             }
-            
             this.physics.world.collide(this.bunny, this.obstacleGroup, this.obsCollision, null, this);
+            
             this.bunny.x = Phaser.Math.Clamp(this.bunny.x, 10, game.config.width); // needs to stop acceleration.
-
         }
     }
 
     obsCollision() {
-        this.bunny.body.touching.down == true;
+        //this.bunny.body.touching.down == true;
     }
+
+
 
 
 }

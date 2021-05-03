@@ -16,7 +16,7 @@ let config = {
             }
         }
     },
-    scene: [ Starter ]
+    scene: [ Menu, Starter ]
 }
 
 let game = new Phaser.Game(config);
@@ -24,5 +24,6 @@ let game = new Phaser.Game(config);
 //globals
 let cursors;
 let bunny = null;
+let keyS;
 const SCALE = 0.5;
 const tileSize = 26;
