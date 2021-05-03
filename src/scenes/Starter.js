@@ -77,10 +77,14 @@ class Starter extends Phaser.Scene {
                 this.bunny.body.setDragX(this.DRAG);
             }
             
-            this.physics.world.collide(this.bunny, this.obstacleGroup, this.Collision, null, this);
+            this.physics.world.collide(this.bunny, this.obstacleGroup, this.obsCollision, null, this);
             this.bunny.x = Phaser.Math.Clamp(this.bunny.x, 10, game.config.width); // needs to stop acceleration.
 
         }
+    }
+
+    obsCollision() {
+        this.bunny.body.touching.down == true;
     }
 
 
