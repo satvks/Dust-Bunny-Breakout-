@@ -1,4 +1,5 @@
 console.log("entered starter");
+let speedInc = 0;
 class Starter extends Phaser.Scene {
     constructor() {
         super('startScene');
@@ -52,9 +53,18 @@ class Starter extends Phaser.Scene {
         this.bunny.destroyed = false;   // if vacuum caught up
         this.physics.add.collider(this.bunny, this.ground);
 
-        this.addBarrier();
-        // this.physics.add.collider(this.obstacleGroup, this.ground); //problems whateverr
+        this.time.delayedCall(2500, () => { 
+            this.addBarrier(); 
+        });
 
+        // this.physics.add.collider(this.obstacleGroup, this.ground); //problems whateverr
+        
+        //TIMER
+        this.time.addEvent({
+            delay: 3000,                // ms
+            callback: this.levelBump(),
+            loop: true
+        })
     }
 
     addBarrier() {
@@ -91,7 +101,13 @@ class Starter extends Phaser.Scene {
     }
 
     obsCollision() {
+        //allows resetting jumps, tho not necessary
+        //check simply needs to be before button presses are checked
         //this.bunny.body.touching.down == true;
+    }
+
+    levelBump() {
+        if(speedInc < 250) speedInc -= 30;
     }
 
 

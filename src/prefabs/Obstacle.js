@@ -1,11 +1,12 @@
 class Obstacle extends Phaser.Physics.Arcade.Sprite {
-    constructor(scene) {
+    constructor(scene, speed, sprite) {
         // calls Phaser Physics Sprite constructor
         // Physics.Sprite(game/scene,x,y,texture,frame (if part of spritesheet));
-        super(scene, game.config.width, game.config.height / 1.5 - tileSize -30, 'blockA').setScale(SCALE+2);
+        super(scene, game.config.width, game.config.height / 1.5 - tileSize -30, sprite).setScale(SCALE+2);
         scene.add.existing(this);               // add to existing scene, displayList, updateList
         scene.physics.add.existing(this);       // add to physics system
-        this.setVelocityX(-240);                   // make it go!
+        this.setVelocityX(speed);                   // make it go!
+        console.log(speed);
         this.body.allowGravity = false;
         this.setImmovable();
         this.newObstacle = true;                 // custom property to control obstacle spawning
