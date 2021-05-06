@@ -4,6 +4,8 @@ class Menu extends Phaser.Scene {
     }
     preload() {
         this.load.spritesheet('menubg', 'assets/MenuScreenSpriteSheet.png', {frameWidth: 1080, frameHeight: 620, startFrame: 0, endFrame: 28});
+        this.load.audio('sfx_select', './assets/MenuButtonSound.wav');
+        this.load.audio('music', './assets/MusicTrack.wav');
     }
 
     create() {
@@ -33,6 +35,20 @@ class Menu extends Phaser.Scene {
             'Play Game', menuConfig).setOrigin(0.5);
 
         keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        
+        this.music = this.sound.add('music');
+
+            let musicConfig = {
+              mute: false,
+              volume:1,
+              rate:1,
+              detune:0,
+              seek:0,
+              loop: true,
+              delay:0,
+
+            }
+          this.music.play(musicConfig);
 
     }
 
