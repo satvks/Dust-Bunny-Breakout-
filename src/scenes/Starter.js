@@ -1,5 +1,4 @@
 console.log("entered starter");
-let speedInc = 0;
 class Starter extends Phaser.Scene {
     constructor() {
         super('startScene');
@@ -19,9 +18,9 @@ class Starter extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
 
         // variables and settings
-        this.ACCELERATION = 250;
-        this.MAX_X_VEL = 10;   // pixels/second
-        this.MAX_Y_VEL = 10;
+        this.ACCELERATION = 200;
+        this.MAX_X_VEL = 5;   // pixels/second
+        this.MAX_Y_VEL = 5;
         this.DRAG = 2500;    // DRAG < ACCELERATION = icy slide
         this.JUMP_VELOCITY = -300;
         this.physics.world.gravity.y = 400;
@@ -57,6 +56,9 @@ class Starter extends Phaser.Scene {
             this.addBarrier(); 
         });
 
+        game.time.events.loop(3000, this.levelBump, this);
+
+
         // this.physics.add.collider(this.obstacleGroup, this.ground); //problems whateverr
         
         //TIMER
@@ -71,7 +73,8 @@ class Starter extends Phaser.Scene {
         // CREATION OF OBSTACLE INSTANCE!!
         let obsSprite = (Math.random() > 0.5) ? 'blockA': 'blockB';
         let speedVariance  = -200 - speedInc;
-        let obstacle = new Obstacle(this, Phaser.Math.Between(-200, speedVariance), obsSprite);
+        console.log(speedVariance);
+        let obstacle = new Obstacle(this, Phaser.Math.Between(-200-(speedInc/2), speedVariance), obsSprite);
         this.obstacleGroup.add(obstacle);
     }
 
@@ -107,7 +110,8 @@ class Starter extends Phaser.Scene {
     }
 
     levelBump() {
-        if(speedInc < 250) speedInc -= 30;
+        console.log("bump called");
+        if(speedInc < 400) speedInc -= 40;
     }
 
 

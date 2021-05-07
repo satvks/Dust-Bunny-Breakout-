@@ -30,6 +30,7 @@ let game = new Phaser.Game(config);
 //globals
 let cursors;
 let bunny = null;
-let keyS;
+//let keyS;
 const SCALE = 0.5;
 const tileSize = 26;
+let speedInc = 0;
