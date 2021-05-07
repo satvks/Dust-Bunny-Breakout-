@@ -12,9 +12,9 @@ class Starter extends Phaser.Scene {
         this.load.image('groundScroll', 'floor.png');
         this.load.image('blockB', 'BoxB.png');
         this.load.image('blockA', 'BoxA.png');
-        this.load.audio('bunny_jump', './assets/BunnyJumpSoundFinal.wav');
-        this.load.audio('bunny_hit', './assets/BunnyHitSound.wav');
-        this.load.audio('vacuum_collision', './assets/VacuumCollision.wav');
+        this.load.audio('bunny_jump', 'BunnyJumpSoundFinal.wav');
+        this.load.audio('bunny_hit', 'BunnyHitSound.wav');
+        this.load.audio('vacuum_collision', 'VacuumCollision.wav');
     }
 
     create() {
@@ -59,17 +59,14 @@ class Starter extends Phaser.Scene {
             this.addBarrier(); 
         });
 
-        game.time.events.loop(3000, this.levelBump, this);
-
-
         // this.physics.add.collider(this.obstacleGroup, this.ground); //problems whateverr
         
         //TIMER
-        this.time.addEvent({
-            delay: 3000,                // ms
-            callback: this.levelBump(),
-            loop: true
-        })
+        // Phaser.Time.TimerEvent({
+        //     delay: 3000,                // ms
+        //     callback: this.levelBump(),
+        //     loop: true
+        // })
     }
 
     addBarrier() {
@@ -77,8 +74,11 @@ class Starter extends Phaser.Scene {
         let obsSprite = (Math.random() > 0.5) ? 'blockA': 'blockB';
         let speedVariance  = -200 - speedInc;
         console.log(speedVariance);
-        let obstacle = new Obstacle(this, Phaser.Math.Between(-200-(speedInc/2), speedVariance), obsSprite);
+        let obstacle = new Obstacle(this, Phaser.Math.Between(speedVariance, -200-(speedInc/2)), obsSprite);
         this.obstacleGroup.add(obstacle);
+        this.time.delayedCall(5500, () => { 
+            this.levelBump(); 
+        });
     }
 
     update() {
@@ -90,6 +90,7 @@ class Starter extends Phaser.Scene {
         if(!this.bunny.destroyed) {
             // bunny controls
             if(this.bunny.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
+                this.sound.play('bunny_jump', {volume = 0.5});
                 this.bunny.body.setVelocityY(this.JUMP_VELOCITY);
             } else if(cursors.right.isDown && this.bunny.x < game.config.width-5) {
                 this.bunny.body.setAccelerationX(this.ACCELERATION);
@@ -114,10 +115,7 @@ class Starter extends Phaser.Scene {
 
     levelBump() {
         console.log("bump called");
-        if(speedInc < 400) speedInc -= 40;
+        if(speedInc < -400) speedInc -= 40;
     }
-
-
-
 
 }

@@ -50,7 +50,7 @@ class Menu extends Phaser.Scene {
 
             let musicConfig = {
               mute: false,
-              volume:1,
+              volume:0.4,
               rate:1,
               detune:0,
               seek:0,
