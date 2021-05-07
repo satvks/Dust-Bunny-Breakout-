@@ -19,6 +19,7 @@ class Starter extends Phaser.Scene {
 
     create() {
         cursors = this.input.keyboard.createCursorKeys();
+        speedInc = 30;
 
         // variables and settings
         this.ACCELERATION = 200;
@@ -67,6 +68,9 @@ class Starter extends Phaser.Scene {
         //     callback: this.levelBump(),
         //     loop: true
         // })
+
+        //sounds?
+        this.jump = this.sound.add('bunny_jump', {volume: 0.35});
     }
 
     addBarrier() {
@@ -76,9 +80,6 @@ class Starter extends Phaser.Scene {
         console.log(speedVariance);
         let obstacle = new Obstacle(this, Phaser.Math.Between(speedVariance, -200-(speedInc/2)), obsSprite);
         this.obstacleGroup.add(obstacle);
-        this.time.delayedCall(5500, () => { 
-            this.levelBump(); 
-        });
     }
 
     update() {
@@ -90,7 +91,8 @@ class Starter extends Phaser.Scene {
         if(!this.bunny.destroyed) {
             // bunny controls
             if(this.bunny.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
-                this.sound.play('bunny_jump', {volume = 0.5});
+                
+                this.jump.play();
                 this.bunny.body.setVelocityY(this.JUMP_VELOCITY);
             } else if(cursors.right.isDown && this.bunny.x < game.config.width-5) {
                 this.bunny.body.setAccelerationX(this.ACCELERATION);
@@ -115,7 +117,7 @@ class Starter extends Phaser.Scene {
 
     levelBump() {
         console.log("bump called");
-        if(speedInc < -400) speedInc -= 40;
+        if(speedInc < -400) speedInc += 40;
     }
 
 }
