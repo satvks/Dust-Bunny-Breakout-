@@ -4,12 +4,8 @@ class Menu extends Phaser.Scene {
     }
     preload() {
         this.load.spritesheet('menubg', 'assets/MenuScreenSpriteSheet.png', {frameWidth: 1080, frameHeight: 620, startFrame: 0, endFrame: 28});
-<<<<<<< HEAD
-        this.load.spritesheet('button1', 'assets/button.png', {frameWidth: 500, frameHeight: 500, startFrame: 0, endFrame: 0});
-=======
         this.load.audio('sfx_select', './assets/MenuButtonSound.wav');
         this.load.audio('music', './assets/MusicTrack.wav');
->>>>>>> e89e90e2d10bb5a83838e66c73ab0f4ff10303ff
     }
 
     create() {
@@ -48,10 +44,7 @@ class Menu extends Phaser.Scene {
         this.add.text(2*game.config.width/3+27, 2*game.config.height/3, 
             'Tap to Play Game', menuConfig).setOrigin(0.5);
 
-<<<<<<< HEAD
-        //keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
-=======
-        keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
+        // keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         
         this.music = this.sound.add('music');
 
@@ -66,7 +59,6 @@ class Menu extends Phaser.Scene {
 
             }
           this.music.play(musicConfig);
->>>>>>> e89e90e2d10bb5a83838e66c73ab0f4ff10303ff
 
     }
 
@@ -75,22 +67,13 @@ class Menu extends Phaser.Scene {
     }
 
     update() {
-<<<<<<< HEAD
         if(this.pointer.isDown && this.pointer.x > 240
             && this.pointer.x < 400
             && this.pointer.y > 420
             && this.pointer.y < 440) {
+                this.sound.play("sfx_select");
                 this.startScene();
         }
     }
     
 }
-=======
-        if(Phaser.Input.Keyboard.JustDown(keyS)) {
-            this.sound.play("sfx_select");
-            this.scene.start("startScene");
-        }
-    }
-
-}
->>>>>>> e89e90e2d10bb5a83838e66c73ab0f4ff10303ff
