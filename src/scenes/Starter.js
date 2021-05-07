@@ -8,10 +8,13 @@ class Starter extends Phaser.Scene {
         this.load.path = './assets/';
         this.load.image('bunny', 'Bunny.png');
         this.load.image('floors', 'block.png');
-        this.load.image('room', 'bunnybg.png');
+        this.load.image('room', 'EndlessRunnerBGFinal.png');
         this.load.image('groundScroll', 'floor.png');
         this.load.image('blockB', 'BoxB.png');
         this.load.image('blockA', 'BoxA.png');
+        this.load.audio('bunny_jump', './assets/BunnyJumpSoundFinal.wav');
+        this.load.audio('bunny_hit', './assets/BunnyHitSound.wav');
+        this.load.audio('vacuum_collision', './assets/VacuumCollision.wav');
     }
 
     create() {
