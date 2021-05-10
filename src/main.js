@@ -34,3 +34,4 @@ let bunny = null;
 const SCALE = 0.5;
 const tileSize = 26;
 let speedInc = 0;
+let tileSpeed = 5;

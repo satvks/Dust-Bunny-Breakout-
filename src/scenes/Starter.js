@@ -63,11 +63,12 @@ class Starter extends Phaser.Scene {
         // this.physics.add.collider(this.obstacleGroup, this.ground); //problems whateverr
         
         //TIMER
-        // Phaser.Time.TimerEvent({
-        //     delay: 3000,                // ms
-        //     callback: this.levelBump(),
-        //     loop: true
-        // })
+        this.difficultyTimer = this.time.addEvent({
+            delay: 5500,
+            callback: this.levelBump,
+            callbackScope: this,
+            loop: true
+        });
 
         //sounds?
         this.jump = this.sound.add('bunny_jump', {volume: 0.35});
@@ -83,7 +84,7 @@ class Starter extends Phaser.Scene {
     }
 
     update() {
-        this.background.tilePositionX += 5;
+        this.background.tilePositionX += tileSpeed;
         if(this.bunny.destroyed == false & (this.bunny.x < 120 && this.bunny.y < game.config.height + 30)) {
             this.bunny.destroyed = true;
             this.bunny.destroy();   // game over
@@ -116,8 +117,11 @@ class Starter extends Phaser.Scene {
     }
 
     levelBump() {
-        console.log("bump called");
-        if(speedInc < -400) speedInc += 40;
+        console.log("bump called", speedInc);
+        if(speedInc > -400) {
+            speedInc += 15;
+            tileSpeed += 0.45;
+        }
     }
 
 }
