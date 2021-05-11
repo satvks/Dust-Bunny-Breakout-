@@ -43,6 +43,15 @@ class Menu extends Phaser.Scene {
             'Play Game', menuConfig).setOrigin(0.5);
         this.add.text(2*game.config.width/3+27, 2*game.config.height/3, 
             'Tap to Play Game', menuConfig).setOrigin(0.5);
+        this.add.text(game.config.width/3.5, 2*game.config.height/2.6, 
+            'Instructions:', menuConfig).setOrigin(0.5);
+        this.add.text(2*game.config.width/3.2, 2*game.config.height/2.6, 
+            'Press ^ arrow key to Jump', menuConfig).setOrigin(0.5);
+        this.add.text(2*game.config.width/3, 2*game.config.height/2.4, 
+            'Press <- arrow key to move Left', menuConfig).setOrigin(0.5);
+        this.add.text(2*game.config.width/3, 2*game.config.height/2.2, 
+            'Press -> arrow key to move Right', menuConfig).setOrigin(0.5);
+
 
         // keyS = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
         
