@@ -118,9 +118,12 @@ class Starter extends Phaser.Scene {
 
     levelBump() {
         console.log("bump called", speedInc);
-        if(speedInc > -400) {
+        if(speedInc < 150) {
             speedInc += 15;
             tileSpeed += 0.45;
+        }
+        else {
+            speedInc = -400;
         }
     }
 
