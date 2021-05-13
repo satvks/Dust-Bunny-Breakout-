@@ -7,7 +7,7 @@ class Starter extends Phaser.Scene {
     preload() {
         //ART
         this.load.path = './assets/';
-        this.load.image('bunny', 'Bunny.png');
+        this.load.image('bunny', 'bunnyIdle1.png');
         this.load.image('floors', 'block.png');
         this.load.image('room', 'EndlessRunnerBGFinal.png'); // big wan
         this.load.image('groundScroll', 'floor.png');       // not as beeg
