@@ -81,6 +81,9 @@ class Starter extends Phaser.Scene {
 
         //sounds?
         this.jump = this.sound.add('bunny_jump', {volume: 0.35});
+        this.whoosh = this.sound.add('vacuum_collision', {volume: 0.25, loop: true});
+        this.whoosh.play();
+        
     }
 
     addBarrier() {
@@ -95,10 +98,15 @@ class Starter extends Phaser.Scene {
     update() {
         this.background.tilePositionX += tileSpeed;
 
-        if(this.bunny.x < 120 && this.bunny.y < game.config.height + 30) {
-            this.bunny.destroyed = true;
+        if(!this.bunny.destroyed && this.bunny.x < 120 && this.bunny.y < game.config.height + 30) {
+            this.sound.play('bunny_hit', {volume: 0.80});
             this.bunny.destroy();   // game over
-        } else {
+            this.bunny.destroyed = true;
+            this.whoosh.stop();
+            this.scene.start("gameOverScene");
+            //move scene to game over.
+        } 
+        if(!this.bunny.destroyed) {
             // bunny controls
             this.physics.world.collide(this.bunny, this.obstacleGroup, this.obsCollision, null, this);
             if(this.bunny.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
