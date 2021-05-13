@@ -22,7 +22,7 @@ let config = {
             }
         }
     },
-    scene: [ Menu, Starter ]
+    scene: [ Menu, Starter, GameOver ]
 }
 
 let game = new Phaser.Game(config);
@@ -30,7 +30,7 @@ let game = new Phaser.Game(config);
 //globals
 let cursors;
 let bunny = null;
-//let keyS;
+let keyR;
 const SCALE = 0.5;
 const tileSize = 26;
 let speedInc = 0;
