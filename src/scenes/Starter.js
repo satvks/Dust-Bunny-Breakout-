@@ -12,6 +12,7 @@ class Starter extends Phaser.Scene {
         this.load.image('groundScroll', 'floor.png');
         this.load.image('blockB', 'BoxB.png');
         this.load.image('blockA', 'BoxA.png');
+        this.load.image('vacuum', 'Vacuum.png');
         this.load.audio('bunny_jump', 'BunnyJumpSoundFinal.wav');
         this.load.audio('bunny_hit', 'BunnyHitSound.wav');
         this.load.audio('vacuum_collision', 'VacuumCollision.wav');
@@ -49,6 +50,10 @@ class Starter extends Phaser.Scene {
         this.obstacleGroup = this.add.group({
             runChildUpdate: true    // make sure update runs on group children
         });
+        
+        this.vacuum = this.add.tileSprite(1,5,210,416,'vacuum'
+        ).setOrigin(0.2,0); //added vacuum
+
 
         this.bunny = this.physics.add.sprite(game.config.width/2, game.config.height/1.5-tileSize -40, 'bunny').setScale(SCALE+.1);
         this.bunny.body.setBounce(0.1);
