@@ -5,13 +5,17 @@ class Starter extends Phaser.Scene {
     }
 
     preload() {
+        //ART
         this.load.path = './assets/';
         this.load.image('bunny', 'Bunny.png');
         this.load.image('floors', 'block.png');
-        this.load.image('room', 'EndlessRunnerBGFinal.png');
-        this.load.image('groundScroll', 'floor.png');
-        this.load.image('blockB', 'BoxB.png');
+        this.load.image('room', 'EndlessRunnerBGFinal.png'); // big wan
+        this.load.image('groundScroll', 'floor.png');       // not as beeg
+        this.load.image('blockB', 'BoxB.png');              // these r chill
         this.load.image('blockA', 'BoxA.png');
+        //BUNNY ART
+        //this.load.spritesheet('bunnyRun', 'bunnyJumpSheet.png', 136, 140, 17); //invalid frame width.
+        //SOUND
         this.load.audio('bunny_jump', 'BunnyJumpSoundFinal.wav');
         this.load.audio('bunny_hit', 'BunnyHitSound.wav');
         this.load.audio('vacuum_collision', 'VacuumCollision.wav');
@@ -22,10 +26,10 @@ class Starter extends Phaser.Scene {
         speedInc = 30;
 
         // variables and settings
-        this.ACCELERATION = 200;
-        this.MAX_X_VEL = 5;   // pixels/second
+        this.ACCELERATION = 400;
+        this.MAX_X_VEL = 10;   // pixels/second
         this.MAX_Y_VEL = 5;
-        this.DRAG = 2500;    // DRAG < ACCELERATION = icy slide
+        this.DRAG = 1250;    // DRAG < ACCELERATION = icy slide
         this.JUMP_VELOCITY = -300;
         this.physics.world.gravity.y = 400;
 
@@ -85,14 +89,14 @@ class Starter extends Phaser.Scene {
 
     update() {
         this.background.tilePositionX += tileSpeed;
-        if(this.bunny.destroyed == false & (this.bunny.x < 120 && this.bunny.y < game.config.height + 30)) {
+
+        if(this.bunny.x < 120 && this.bunny.y < game.config.height + 30) {
             this.bunny.destroyed = true;
             this.bunny.destroy();   // game over
-        }
-        if(!this.bunny.destroyed) {
+        } else {
             // bunny controls
+            this.physics.world.collide(this.bunny, this.obstacleGroup, this.obsCollision, null, this);
             if(this.bunny.body.touching.down && Phaser.Input.Keyboard.JustDown(cursors.up)) {
-                
                 this.jump.play();
                 this.bunny.body.setVelocityY(this.JUMP_VELOCITY);
             } else if(cursors.right.isDown && this.bunny.x < game.config.width-5) {
@@ -104,7 +108,6 @@ class Starter extends Phaser.Scene {
                 this.bunny.body.setAccelerationX(0);
                 this.bunny.body.setDragX(this.DRAG);
             }
-            this.physics.world.collide(this.bunny, this.obstacleGroup, this.obsCollision, null, this);
             
             this.bunny.x = Phaser.Math.Clamp(this.bunny.x, 10, game.config.width); // needs to stop acceleration.
         }
@@ -123,7 +126,7 @@ class Starter extends Phaser.Scene {
             tileSpeed += 0.45;
         }
         else {
-            speedInc = -400;
+            speedInc = 180;
         }
     }
 
